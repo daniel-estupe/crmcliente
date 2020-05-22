@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -32,6 +32,8 @@ const OBTENER_CLIENTES = gql`
 
 const NuevoCliente = () => {
 	const router = useRouter();
+	const [ mensaje, guardarMensaje ] = useState(null);
+
 	const [ nuevoCliente ] = useMutation(NUEVO_CLIENTE, {
 		update(cache, { data: { nuevoCliente } }) {
 			const { obtenerClientesVendedor } = cache.readQuery({ query: OBTENER_CLIENTES });
@@ -77,14 +79,28 @@ const NuevoCliente = () => {
 
 				router.push('/');
 			} catch (error) {
-				console.log(error);
+				guardarMensaje(error.message.replace('GraphQL error: ', ''));
+
+				setTimeout(() => {
+					guardarMensaje(null);
+				}, 2000);
 			}
 		}
 	});
 
+	const mostrarMensaje = () => {
+		return (
+			<div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+				<p>{mensaje}</p>
+			</div>
+		);
+	};
+
 	return (
 		<Layout>
 			<h1 className="text-2xl text-gray-800 font-light">Nuevo Cliente</h1>
+
+			{mensaje && mostrarMensaje()}
 
 			<div className="flex justify-center mt-5">
 				<div className="w-full max-w-lg">
