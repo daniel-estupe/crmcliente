@@ -19,6 +19,11 @@ const Header = () => {
 
 	if (loading) return null;
 
+	if (!data) {
+		router.push('/login');
+		return null;
+	}
+
 	const { nombre, apellido } = data.obtenerUsuario;
 
 	const cerrarSesion = () => {
