@@ -20,8 +20,7 @@ const Header = () => {
 	if (loading) return null;
 
 	if (!data) {
-		router.push('/login');
-		return null;
+		return router.push('/login');
 	}
 
 	const { nombre, apellido } = data.obtenerUsuario;
