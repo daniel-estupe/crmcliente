@@ -1,4 +1,5 @@
 import Layout from '../components/Layout';
+import Cliente from '../components/Cliente';
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -20,7 +21,12 @@ const Index = () => {
 
 	const { data, loading, error } = useQuery(OBTENER_CLIENTES);
 
-	if (loading) return null;
+	if (loading) return 'cargando...';
+
+	if (error) {
+		console.log('ha habido un problema', error);
+		return 'error';
+	}
 
 	if (!data.obtenerClientesVendedor) {
 		return router.push('/login');
@@ -44,15 +50,7 @@ const Index = () => {
 					</tr>
 				</thead>
 				<tbody className="bg-white">
-					{data.obtenerClientesVendedor.map((cliente) => (
-						<tr key={cliente.id}>
-							<td className="border px-4 py-2">
-								{cliente.nombre} {cliente.apellido}
-							</td>
-							<td className="border px-4 py-2">{cliente.empresa}</td>
-							<td className="border px-4 py-2">{cliente.email}</td>
-						</tr>
-					))}
+					{data.obtenerClientesVendedor.map((cliente) => <Cliente key={cliente.id} cliente={cliente} />)}
 				</tbody>
 			</table>
 		</Layout>
