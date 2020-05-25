@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 const NUEVO_CLIENTE = gql`
 	mutation nuevoCliente($input: ClienteInput) {
@@ -76,6 +77,8 @@ const NuevoCliente = () => {
 						}
 					}
 				});
+
+				Swal.fire('Creado!', `${data.nuevoCliente.nombre} ha sido agregado!`, 'success');
 
 				router.push('/');
 			} catch (error) {
