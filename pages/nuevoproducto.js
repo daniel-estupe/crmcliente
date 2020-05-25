@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 const OBTENER_PRODUCTOS = gql`
 	query obtenerProductos {
@@ -73,6 +74,8 @@ const NuevoProducto = () => {
 						}
 					}
 				});
+
+				Swal.fire('Creado!', `Has creado el producto ${data.nuevoProducto.nombre}!`, 'success');
 
 				router.push('/productos');
 			} catch (error) {
