@@ -16,6 +16,14 @@ const OBTENER_PRODUCTO = gql`
 	}
 `;
 
+const ACTUALIZAR_PRODUCTO = gql`
+	mutation actualizarProducto($id: ID!, $input: ProductoInput) {
+		actualizarProducto(id: $id, input: $input) {
+			nombre
+		}
+	}
+`;
+
 const EditarProducto = () => {
 	const router = useRouter();
 	const { query: { id } } = router;
@@ -26,7 +34,7 @@ const EditarProducto = () => {
 		}
 	});
 
-	// const [ actualizarCliente ] = useMutation(ACTUALIZAR_PRODUCTO);
+	const [ actualizarCliente ] = useMutation(ACTUALIZAR_PRODUCTO);
 
 	const schemaValidation = Yup.object({
 		nombre: Yup.string().required('El nombre del producto es obligatorio'),
@@ -41,6 +49,28 @@ const EditarProducto = () => {
 
 	if (loading) return 'Cargando...';
 
+	const actualizarInfoProducto = async (valores) => {
+		const { nombre, existencia, precio } = valores;
+		try {
+			const { data } = await actualizarCliente({
+				variables: {
+					id,
+					input: {
+						nombre,
+						existencia,
+						precio
+					}
+				}
+			});
+
+			Swal.fire('Actualizado!', `${data.actualizarProducto.nombre} se actualizó correctamente.`, 'success');
+
+			router.push('/productos');
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const { obtenerProducto } = data;
 
 	return (
@@ -54,8 +84,7 @@ const EditarProducto = () => {
 						enableReinitialize
 						initialValues={obtenerProducto}
 						onSubmit={(valores) => {
-							console.log(valores);
-							// actualizarInfoProducto(valores);
+							actualizarInfoProducto(valores);
 						}}
 					>
 						{(props) => {
