@@ -8,8 +8,32 @@ const ELIMINAR_CLIENTE = gql`
 	}
 `;
 
+const OBTENER_CLIENTES = gql`
+	query obtenerClientesVendedor {
+		obtenerClientesVendedor {
+			id
+			nombre
+			apellido
+			empresa
+			email
+		}
+	}
+`;
+
 const Cliente = ({ cliente }) => {
-	const [ eliminarCliente ] = useMutation(ELIMINAR_CLIENTE);
+	const [ eliminarCliente ] = useMutation(ELIMINAR_CLIENTE, {
+		update(cache) {
+			const { obtenerClientesVendedor } = cache.readQuery({ query: OBTENER_CLIENTES });
+
+			cache.writeQuery({
+				query: OBTENER_CLIENTES,
+				data: {
+					obtenerClientesVendedor: obtenerClientesVendedor.filter((clienteActual) => clienteActual.id !== id)
+				}
+			});
+		}
+	});
+
 	const { id, nombre, apellido, empresa, email } = cliente;
 
 	const confirmarEliminarCliente = (id) => {
