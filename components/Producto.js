@@ -37,7 +37,7 @@ const Producto = ({ producto }) => {
 
 	const confirmarEliminarProducto = () => {
 		Swal.fire({
-			title: '¿Deseas eliminar a este producto?',
+			title: `¿Deseas eliminar el producto ${nombre}?`,
 			text: 'Esta acción no se puede deshacer!',
 			icon: 'warning',
 			showCancelButton: true,
