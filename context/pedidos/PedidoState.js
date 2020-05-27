@@ -19,7 +19,14 @@ const PedidoState = ({ children }) => {
 		});
 	};
 
-	return <PedidoContext.Provider value={{ agregarCliente }}>{children}</PedidoContext.Provider>;
+	const agregarProducto = (producto) => {
+		dispatch({
+			type: SELECCIONAR_PRODUCTO,
+			payload: producto
+		});
+	};
+
+	return <PedidoContext.Provider value={{ agregarCliente, agregarProducto }}>{children}</PedidoContext.Provider>;
 };
 
 export default PedidoState;
