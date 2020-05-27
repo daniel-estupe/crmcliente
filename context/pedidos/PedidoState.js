@@ -5,14 +5,21 @@ import PedidoReducer from './PedidoReducer';
 
 const PedidoState = ({ children }) => {
 	const initialState = {
-		cliente: [],
+		cliente: {},
 		productos: [],
 		total: 0
 	};
 
 	const [ state, dispatch ] = useReducer(PedidoReducer, initialState);
 
-	return <PedidoContext.Provider value={{}}>{children}</PedidoContext.Provider>;
+	const agregarCliente = (cliente) => {
+		dispatch({
+			type: SELECCIONAR_CLIENTE,
+			payload: cliente
+		});
+	};
+
+	return <PedidoContext.Provider value={{ agregarCliente }}>{children}</PedidoContext.Provider>;
 };
 
 export default PedidoState;
