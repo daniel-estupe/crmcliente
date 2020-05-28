@@ -26,7 +26,11 @@ const PedidoState = ({ children }) => {
 		});
 	};
 
-	return <PedidoContext.Provider value={{ agregarCliente, agregarProducto }}>{children}</PedidoContext.Provider>;
+	return (
+		<PedidoContext.Provider value={{ productos: state.productos, agregarCliente, agregarProducto }}>
+			{children}
+		</PedidoContext.Provider>
+	);
 };
 
 export default PedidoState;
