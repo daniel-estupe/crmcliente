@@ -19,10 +19,24 @@ const PedidoState = ({ children }) => {
 		});
 	};
 
-	const agregarProducto = (producto) => {
+	const agregarProducto = (productosSeleccionados) => {
+		let nuevoState;
+
+		if (state.productos.length > 0) {
+			// tomar el segundo arreglo, una copia para asignarlo al primero
+			nuevoState = productosSeleccionados.map((producto) => {
+				const nuevoObjeto = state.productos.find((productoState) => productoState.id === producto.id);
+				return { ...producto, ...nuevoObjeto };
+			});
+		} else {
+			nuevoState = productosSeleccionados;
+		}
+
+		console.log('nuevoState', nuevoState);
+
 		dispatch({
 			type: SELECCIONAR_PRODUCTO,
-			payload: producto
+			payload: nuevoState
 		});
 	};
 
