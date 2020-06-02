@@ -5,6 +5,8 @@ import AsignarProductos from '../components/pedidos/AsignarProductos';
 import ResumenPedido from '../components/pedidos/ResumenPedido';
 import Total from '../components/pedidos/Total';
 import { gql, useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 import PedidoContext from '../context/pedidos/PedidoContext';
 
@@ -17,6 +19,8 @@ const NUEVO_PEDIDO = gql`
 `;
 
 const NuevoPedido = () => {
+	const router = useRouter();
+
 	const [ mensaje, setMensaje ] = useState(null);
 
 	const [ nuevoPedido ] = useMutation(NUEVO_PEDIDO);
@@ -45,6 +49,12 @@ const NuevoPedido = () => {
 					}
 				}
 			});
+
+			// mostrar alerta
+			Swal.fire('Creado!', 'El pedido se registró correctamente.', 'success');
+
+			// redireccionar
+			router.push('/pedidos');
 		} catch (error) {
 			setMensaje(error.message.replace('GraphQL Error: ', ''));
 
