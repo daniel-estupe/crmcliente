@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Layout from '../components/Layout';
 import AsignarCliente from '../components/pedidos/AsignarCliente';
 import AsignarProductos from '../components/pedidos/AsignarProductos';
@@ -17,6 +17,8 @@ const NUEVO_PEDIDO = gql`
 `;
 
 const NuevoPedido = () => {
+	const [ mensaje, setMensaje ] = useState(null);
+
 	const [ nuevoPedido ] = useMutation(NUEVO_PEDIDO);
 
 	const pedidoContext = useContext(PedidoContext);
@@ -44,13 +46,26 @@ const NuevoPedido = () => {
 				}
 			});
 		} catch (error) {
-			console.log(error);
+			setMensaje(error.message.replace('GraphQL Error: ', ''));
+
+			setTimeout(() => {
+				setMensaje(null);
+			}, 3000);
 		}
+	};
+
+	const mostrarMensaje = () => {
+		return (
+			<div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+				<p>{mensaje}</p>
+			</div>
+		);
 	};
 
 	return (
 		<Layout>
 			<h1 className="text-2xl text-gray-800 font-light">Nuevo Pedido</h1>
+			{mensaje && mostrarMensaje()}
 			<div className="flex justify-center mt-5">
 				<div className="w-full max-w-lg">
 					<AsignarCliente />
