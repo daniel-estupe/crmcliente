@@ -10,7 +10,7 @@ const Sidebar = () => {
 			<div className="p-4">
 				<p className="text-white text-2xl font-black">CRM Clientes</p>
 			</div>
-			<nav className="mt-5 list-none">
+			<nav className="mt-2 list-none">
 				<li className={router.pathname === '/' ? 'bg-blue-800 py-2 px-4' : 'py-2 px-4'}>
 					<Link href="/">
 						<a className="text-white block">Clientes</a>
@@ -24,6 +24,21 @@ const Sidebar = () => {
 				<li className={router.pathname === '/productos' ? 'bg-blue-800 py-2 px-4' : 'py-2 px-4'}>
 					<Link href="/productos">
 						<a className="text-white block">Productos</a>
+					</Link>
+				</li>
+			</nav>
+			<div className="p-4 sm:mt-10">
+				<p className="text-white text-2xl font-black">Reportes</p>
+			</div>
+			<nav className="mt-2 list-none">
+				<li className={router.pathname === '/mejoresvendedores' ? 'bg-blue-800 py-2 px-4' : 'py-2 px-4'}>
+					<Link href="/mejoresvendedores">
+						<a className="text-white block">Mejores Vendedores</a>
+					</Link>
+				</li>
+				<li className={router.pathname === '/mejoresclientes' ? 'bg-blue-800 py-2 px-4' : 'py-2 px-4'}>
+					<Link href="/mejoresclientes">
+						<a className="text-white block">Mejores Clientes</a>
 					</Link>
 				</li>
 			</nav>
