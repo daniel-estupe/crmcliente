@@ -20,20 +20,6 @@ const OBTENER_PEDIDOS = gql`
 	query obtenerPedidosVendedor {
 		obtenerPedidosVendedor {
 			id
-			pedido {
-				id
-				cantidad
-				nombre
-			}
-			cliente {
-				id
-				nombre
-				apellido
-				email
-				telefono
-			}
-			total
-			estado
 		}
 	}
 `;
