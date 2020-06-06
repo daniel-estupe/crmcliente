@@ -43,11 +43,15 @@ const Login = () => {
 					}
 				});
 
-				const { token } = data.autenticarUsuario;
-				localStorage.setItem('token', token);
+				setTimeout(() => {
+					const { token } = data.autenticarUsuario;
+					localStorage.setItem('token', token);
+				}, 1000);
 
-				guardarMensaje(null);
-				router.push('/');
+				setTimeout(() => {
+					guardarMensaje(null);
+					router.push('/');
+				}, 2000);
 			} catch (error) {
 				guardarMensaje(error.message.replace('GraphQL error: ', ''));
 
